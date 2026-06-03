@@ -10,7 +10,7 @@ from urllib.parse import urlparse, parse_qs
 from collections import deque
 
 # ── Config ──
-TG_TOKEN = os.environ.get('TG_TOKEN', '8894093917:AAGaWjrd2D5MFZnOMz-pzAR8Hy-BoXhGh0o')
+TG_TOKEN = os.environ.get('TG_TOKEN', '8992735363:AAE7W417B81BAEMtS_qAYCNw861X00x0BI4')
 TG_CHAT  = os.environ.get('TG_CHAT',  '236032472')
 
 config = {
