@@ -259,6 +259,21 @@ def run_server():
     port = int(os.environ.get('PORT', 8080))
     HTTPServer(('0.0.0.0', port), Handler).serve_forever()
 
+def self_ping():
+    """Ping self every 4 minutes to prevent Render sleep"""
+    import time as _time
+    _time.sleep(60)  # wait 1 min after start
+    while True:
+        try:
+            port = int(os.environ.get('PORT', 8080))
+            url = f'http://localhost:{port}/'
+            req = urllib.request.Request(url)
+            urllib.request.urlopen(req, timeout=5)
+            print(f"Self-ping OK — {_time.strftime('%H:%M:%S')}")
+        except Exception as e:
+            print(f"Self-ping error: {e}")
+        _time.sleep(240)  # every 4 minutes
+
 # ── Main ──
 async def main():
     mode_ar = 'متعدد الإشارات' if config['mode'] == 'multi' else 'ارتفاع مفاجئ'
@@ -278,4 +293,5 @@ async def main():
 
 if __name__ == '__main__':
     threading.Thread(target=run_server, daemon=True).start()
+    threading.Thread(target=self_ping, daemon=True).start()
     asyncio.run(main())
